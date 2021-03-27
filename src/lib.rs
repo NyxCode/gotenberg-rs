@@ -2,7 +2,7 @@ use reqwest::multipart::Part;
 use reqwest::{multipart, Body, Client, Method};
 use std::borrow::Cow;
 use tokio::io::AsyncWriteExt;
-use tokio::stream::StreamExt;
+use tokio_stream::StreamExt;
 
 /*
    --form paperWidth=8.27 \
