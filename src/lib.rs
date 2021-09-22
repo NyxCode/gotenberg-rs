@@ -1,8 +1,8 @@
-use reqwest::multipart::Part;
-use reqwest::{multipart, Body, Client, Method};
 use std::borrow::Cow;
+
+use futures::TryStreamExt;
+use reqwest::{multipart, multipart::Part, Body, Client, Method};
 use tokio::io::AsyncWriteExt;
-use tokio::stream::StreamExt;
 
 /*
    --form paperWidth=8.27 \
@@ -42,7 +42,7 @@ impl Html {
         }
     }
 
-    pub fn pages<'a>(mut self, pages: impl Into<Cow<'static, str>>) -> Self {
+    pub fn pages(mut self, pages: impl Into<Cow<'static, str>>) -> Self {
         self.form = self.form.part("pageRanges", Part::text(pages));
         self
     }
@@ -88,8 +88,8 @@ impl Html {
 
 fn build_url(endpoint: impl Into<String>, path: &str) -> String {
     let mut url = endpoint.into();
-    if !url.ends_with("/") {
-        url.push_str("/");
+    if !url.ends_with('/') {
+        url.push('/');
     }
     url.push_str(path);
     url
